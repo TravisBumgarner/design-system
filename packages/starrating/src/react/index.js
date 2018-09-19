@@ -6,18 +6,43 @@ import {
   defaultName as themeDefaultName,
   names as themeNames
 } from '@pluralsight/ps-design-system-theme/react'
+import Icon from '@pluralsight/ps-design-system-icon/react'
 
 import css from '../css'
 import * as vars from '../vars'
 
-const StarRating = (props, context) => {
-  const { value } = this.props
+const TOTAL_STARS = 5
 
-  return React.createElement(
-    'div',
-    {},
-    <span>Hello World! Your value is ${value} </span>
-  )
+const FullStarIcon = <Icon id={Icon.ids.caretUp} size={Icon.sizes.large} />
+
+const EmptyStarIcon = <Icon id={Icon.ids.caretDown} size={Icon.sizes.large} />
+
+const HalfStarIcon = <Icon id={Icon.ids.caretRight} size={Icon.sizes.large} />
+
+const StarRating = (props, context) => {
+  const { value } = props
+
+  const halfIntRoundedValue = Math.floor(value * 2) / 2
+
+  let fullStars = Math.floor(halfIntRoundedValue)
+  let halfStars =
+    Math.floor(halfIntRoundedValue) !== halfIntRoundedValue ? 1 : 0
+
+  const allStars = []
+
+  while (allStars.length < TOTAL_STARS) {
+    if (fullStars) {
+      allStars.push(FullStarIcon)
+      fullStars--
+    } else if (halfStars) {
+      allStars.push(HalfStarIcon)
+      halfStars--
+    } else {
+      allStars.push(EmptyStarIcon)
+    }
+  }
+
+  return React.createElement('div', {}, allStars)
 }
 
 StarRating.propTypes = {
