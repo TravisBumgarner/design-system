@@ -14,5 +14,5 @@ const valueStory = storiesOf('value', module)
 )
 
 const onClickStory = storiesOf('onClick', module)
-onClickStory.add('no onClick', _ => <StarRating value={4.5} onClick={alert} />)
-onClickStory.add('onClick', _ => <StarRating value={4.5} />)
+onClickStory.add('onClick', _ => <StarRating value={4.5} onClick={alert} />)
+onClickStory.add('!onClick', _ => <StarRating value={4.5} />)
