@@ -15,33 +15,26 @@ import * as vars from '../vars'
 const TOTAL_STARS = 5
 
 const FullStarIcon = <Icon id={Icon.ids.caretUp} size={Icon.sizes.large} />
-
 const EmptyStarIcon = <Icon id={Icon.ids.caretDown} size={Icon.sizes.large} />
-
 const HalfStarIcon = <Icon id={Icon.ids.caretRight} size={Icon.sizes.large} />
 
-const StarRating = (props, context) => {
+const StarRating = props => {
   const { value, onClick } = props
 
   const halfIntRoundedValue = Math.floor(value * 2) / 2
 
   let fullStars = Math.floor(halfIntRoundedValue)
-  let halfStars =
-    Math.floor(halfIntRoundedValue) !== halfIntRoundedValue ? 1 : 0
+  let halfStars = Math.floor(halfIntRoundedValue) !== halfIntRoundedValue
 
-  const StarIcons = []
-
-  while (StarIcons.length < TOTAL_STARS) {
-    if (fullStars) {
-      StarIcons.push(FullStarIcon)
-      fullStars--
-    } else if (halfStars) {
-      StarIcons.push(HalfStarIcon)
-      halfStars--
+  const StarIcons = new Array(TOTAL_STARS).fill(undefined).map((_, index) => {
+    if (index < fullStars) {
+      return FullStarIcon
+    } else if (index === fullStars && halfStars) {
+      return HalfStarIcon
     } else {
-      StarIcons.push(EmptyStarIcon)
+      return EmptyStarIcon
     }
-  }
+  })
 
   let Stars
 
@@ -73,10 +66,5 @@ StarRating.defaultProps = {
   value: null,
   onClick: null
 }
-
-StarRating.contextTypes = {}
-
-StarRating.sizes = vars.sizes
-export const sizes = vars.sizes
 
 export default StarRating
